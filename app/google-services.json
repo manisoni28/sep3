@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "440062960386",
+    "firebase_url": "https://codebuddy-d4184.firebaseio.com",
+    "project_id": "codebuddy-d4184",
+    "storage_bucket": "codebuddy-d4184.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:440062960386:android:1a385c9061c60bba72981b",
+        "android_client_info": {
+          "package_name": "com.anhttvn.customrecyclerview"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "440062960386-9et2599gq1nrvgob9hkt24tfuu9fg9ph.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnpue9qaqOiKbP185l1cefmizUCk7hNNs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "440062960386-9et2599gq1nrvgob9hkt24tfuu9fg9ph.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

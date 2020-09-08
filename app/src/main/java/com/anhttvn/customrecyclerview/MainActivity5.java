@@ -1,10 +1,12 @@
 package com.anhttvn.customrecyclerview;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
@@ -14,6 +16,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,6 +35,8 @@ public class MainActivity5 extends AppCompatActivity {
     MyAdapter myAdapter;
     ArrayList<FruitItem> fruitItemArrayList = new ArrayList<>();
     FloatingActionButton floatingActionButton;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference("product");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +80,9 @@ public class MainActivity5 extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fetchGamesByVolley();
+
+                fetchDataByFirebase();
+
 //                FruitItem fruitItem = new FruitItem();
 //                fruitItem.setImage(R.drawable.dau);
 //                fruitItem.setName("Pineapple");
@@ -121,5 +132,29 @@ public class MainActivity5 extends AppCompatActivity {
                     }
                 });
         queue.add(jsonObjectRequest);
+    }
+
+    private void fetchDataByFirebase() {
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot childDataSnaphot : dataSnapshot.getChildren()) {
+                    FruitItem fruitItem = childDataSnaphot.getValue(FruitItem.class);
+                    Log.i("fruitName", fruitItem.getName());
+                    fruitItemArrayList.add(fruitItem);
+                    myAdapter.notifyDataSetChanged();
+
+                }
+                fetchGamesByVolley();
+//                String value = dataSnapshot.getValue(String.class);
+//                textView.setText(value);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }
